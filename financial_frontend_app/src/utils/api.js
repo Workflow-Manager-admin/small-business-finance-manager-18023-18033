@@ -1,4 +1,17 @@
-const API_BASE = process.env.REACT_APP_BACKEND_URL || "https://vscode-internal-112-beta.beta01.cloud.kavia.ai:3001";
+/**
+ * API base URL for all backend requests.
+ * Requires process.env.REACT_APP_BACKEND_URL to be set in the environment (see .env.example).
+ * Do NOT hardcode a fallback (avoid hard-to-debug cloud domain/port mismatch).
+ * Example value: 'https://vscode-internal-112-beta.beta01.cloud.kavia.ai:3001'
+ */
+const API_BASE = process.env.REACT_APP_BACKEND_URL;
+
+if (!API_BASE) {
+  throw new Error(
+    "REACT_APP_BACKEND_URL environment variable must be set in a .env file at the project root. " +
+    "This tells the frontend where to send API requests (e.g., 'https://vscode-internal-112-beta.beta01.cloud.kavia.ai:3001')."
+  );
+}
 
 function authHeaders(token) {
   return token ? { Authorization: `Bearer ${token}` } : {};
